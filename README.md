@@ -1,4 +1,4 @@
-# securepass-ios
+# Secure Pass
 An iOS app for generating strong and customizable passwords using SwiftUI.
 
 ## 🚧 Status
