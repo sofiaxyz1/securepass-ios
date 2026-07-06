@@ -1,9 +1,10 @@
 import Foundation
 
-struct PasswordOptions {
+struct PasswordOptions: Equatable {
     var length: Int = 16
-    var includeUppercase = true
-    var includeLowercase = true
-    var includeNumbers = true
-    var inlcudeSymbols = true
+    var useUppercase = true
+    var useLowercase = true
+    var useNumbers = true
+    var useSymbols = false
 }
+
