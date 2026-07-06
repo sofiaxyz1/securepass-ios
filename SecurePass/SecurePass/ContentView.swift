@@ -1,9 +1,10 @@
 import SwiftUI
+import UIKit
 
 struct ContentView: View {
     @State private var options = PasswordOptions()
-    @State private var password = PasswordGenerator.generate(options: PasswordOptions()
-    )
+    @State private var password = PasswordGenerator.generate(options: PasswordOptions())
+    @State private var history: [String] = []
     
     var body: some View {
         VStack(spacing: 20) {
@@ -39,7 +40,39 @@ struct ContentView: View {
             
             Button("Gerar nova senha") {
                 password = PasswordGenerator.generate(options: options)
+                
+                history.insert(password, at: 0)
+                
+                if history.count > 10 {
+                    history.removeLast()
+                }
             }
+            
+            Button("📋 Copiar senha") {
+                UIPasteboard.general.string = password
+            }
+            
+            Divider()
+                
+            Text("Histórico:")
+                    .font(.headline)
+                
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: 10) {
+                        
+                        ForEach(history, id: \.self) { password in
+                            
+                            Text(password)
+                                .font(.system(.body, design: .monospaced))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding()
+                                .background(.gray.opacity(0.15))
+                                .cornerRadius(10)
+                        }
+                    }
+                }
+                .frame(maxHeight: 200)
+            
         }
         .padding()
         .onChange(of: options) { _, _ in
