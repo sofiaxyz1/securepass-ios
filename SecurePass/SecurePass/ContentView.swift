@@ -33,6 +33,8 @@ struct ContentView: View {
                 if history.count > 10 {
                     history.removeLast()
                 }
+                
+                HistoryStorage.save(history)
             }
             
             HistoryView(
@@ -43,6 +45,9 @@ struct ContentView: View {
         .padding()
         .onChange(of: options) { _, _ in
             password = PasswordGenerator.generate(options: options)
+        }
+        .onAppear {
+            history = HistoryStorage.load()
         }
     }
 }
